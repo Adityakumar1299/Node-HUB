@@ -16,16 +16,19 @@ export default function Notepad() {
     return () => unsubscribe();
   }, [username]);
 
-  const handleChange = (e) => {
-    setContent(e.target.value);
-    setDoc(paragraphRef, { text: e.target.value });
-  };
+  // Debounce function
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setDoc(paragraphRef, { text: content });
+    }, 500); // save every 500ms after typing stops
+    return () => clearTimeout(timeout);
+  }, [content]);
 
   return (
     <textarea
       className="fullscreen-textarea"
       value={content}
-      onChange={handleChange}
+      onChange={(e) => setContent(e.target.value)}
       placeholder={`Start typing in ${username}'s notepad...`}
     />
   );
