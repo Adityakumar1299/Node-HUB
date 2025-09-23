@@ -138,3 +138,86 @@ body {
   /* box-shadow: inset 0 0 0 2px #2563eb; */
 }
 
+.editor-container {
+  height: 100vh;
+  width: 100%;
+  background: #fff;
+}
+
+.ql-editor {
+  min-height: 90vh;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+/* Main notepad container */
+/* .notepad {
+  max-width: 800px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Centered input screen */
+/* .center-box {
+  padding: 50px;
+  text-align: center;
+}
+.center-box input {
+  padding: 10px;
+  font-size: 16px;
+}
+.center-box button {
+  margin-left: 10px;
+  padding: 10px 15px;
+  background: darkblue;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+} */
+
+/* Active users badges */
+/* .active-users {
+  margin-bottom: 15px;
+}
+.user-badge {
+  background: darkblue;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 20px;
+  margin-right: 8px;
+  font-size: 14px;
+  font-weight: 500;
+} */
+
+/* Users activity panel */
+/* .users-log {
+  max-height: 200px;
+  overflow-y: auto;
+  background: #f9fafc;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+.user-log-item {
+  margin-bottom: 6px;
+  font-size: 14px;
+} */
+
+/* Shared textarea */
+/* .fullscreen-textarea {
+  width: 100%;
+  height: 250px;
+  padding: 15px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  resize: none;
+  outline: none;
+  font-family: "Courier New", monospace;
+}  */
+
