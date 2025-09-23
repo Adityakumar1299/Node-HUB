@@ -1,47 +1,53 @@
-
 import { useEffect, useState, useMemo } from "react";
 import { db } from "../firebase/firebaseConfig";
-import { doc, onSnapshot, setDoc, updateDoc } from "firebase/firestore";
+import { doc, getDoc, setDoc, onSnapshot } from "firebase/firestore";
 import { useParams } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-import { v4 as uuidv4 } from "uuid";
 
 export default function Notepad() {
   const { username } = useParams();
-  const [content, setContent] = useState("");
-  const [userId] = useState(uuidv4()); // unique per session
-  const [userColor] = useState(
-    "#" + Math.floor(Math.random() * 16777215).toString(16) // random color
+  const [content, setContent] = useState(
+    localStorage.getItem(`notepad-${username}`) || ""
   );
 
   const noteRef = useMemo(() => doc(db, "notepads", username), [username]);
 
-  // Load initial doc & sync in real-time
   useEffect(() => {
+    // Fetch initial content from Firestore
+    const fetchData = async () => {
+      const snap = await getDoc(noteRef);
+      if (snap.exists()) {
+        const data = snap.data();
+        if (data.content !== content) {
+          setContent(data.content || "");
+          localStorage.setItem(`notepad-${username}`, data.content || "");
+        }
+      } else {
+        await setDoc(noteRef, { content: "" });
+      }
+    };
+    fetchData();
+
+    // Subscribe to real-time updates
     const unsubscribe = onSnapshot(noteRef, (snap) => {
       if (snap.exists()) {
         const data = snap.data();
-        if (data.content) setContent(data.content);
+        if (data.content !== content) {
+          setContent(data.content || "");
+          localStorage.setItem(`notepad-${username}`, data.content || "");
+        }
       }
     });
+
     return () => unsubscribe();
   }, [noteRef]);
 
-  // Update Firestore when content changes
   const handleChange = async (val, delta, source) => {
     setContent(val);
+    localStorage.setItem(`notepad-${username}`, val); // save locally immediately
     if (source === "user") {
-      await setDoc(
-        noteRef,
-        {
-          content: val,
-          users: {
-            [userId]: { name: username, color: userColor },
-          },
-        },
-        { merge: true }
-      );
+      await setDoc(noteRef, { content: val }, { merge: true });
     }
   };
 
@@ -56,6 +62,8 @@ export default function Notepad() {
     </div>
   );
 }
+
+
 
 // import { useEffect, useState } from "react";
 // import { db } from "../firebase/firebaseConfig";
