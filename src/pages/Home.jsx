@@ -16,7 +16,7 @@ export default function Home() {
       {/* Header */}
       <header className="home-header">
         <h1 className="app-title">Nord-HUB</h1>
-        <p className="tagline">Your real-time collaborative notepad</p>
+        <p className="tagline">Your real-time collaborative notepad.</p>
       </header>
 
       {/* Main Content */}
